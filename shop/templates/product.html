@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}{{ product.name }}{% endblock %}
+{% block content %}
+<a href="{{ url_for('shop.index') }}" class="muted">← Back to products</a>
+<section class="product">
+  <div class="thumb big">{{ product.emoji }}</div>
+  <div>
+    <p class="muted">{{ product.category }}</p>
+    <h1>{{ product.name }}</h1>
+    <p class="price">{{ product.price | taka }}</p>
+    <p>{{ product.description }}</p>
+    {% if product.stock > 0 %}
+      <p class="muted">{{ product.stock }} in stock</p>
+      <form method="post" action="{{ url_for('shop.add_to_cart', product_id=product.id) }}" class="row">
+        <input type="number" name="quantity" value="1" min="1" max="{{ product.stock }}" aria-label="Quantity" />
+        <button class="btn">Add to cart</button>
+      </form>
+    {% else %}
+      <p class="out">Out of stock</p>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

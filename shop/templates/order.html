@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Order #{{ order.id }}{% endblock %}
+{% block content %}
+<section class="confirm">
+  <h1>✅ Thank you, {{ order.customer_name }}!</h1>
+  <p>Your order <strong>#{{ order.id }}</strong> has been placed. We'll deliver to:</p>
+  <p class="muted">{{ order.address }}</p>
+  <table class="table">
+    <thead><tr><th>Product</th><th>Qty</th><th>Price</th></tr></thead>
+    <tbody>
+      {% for item in items %}
+        <tr><td>{{ item.emoji }} {{ item.name }}</td><td>{{ item.quantity }}</td><td>{{ (item.price * item.quantity) | taka }}</td></tr>
+      {% endfor %}
+    </tbody>
+    <tfoot><tr><th colspan="2">Total</th><th>{{ order.total | taka }}</th></tr></tfoot>
+  </table>
+  <a href="{{ url_for('shop.index') }}" class="btn">Continue shopping</a>
+</section>
+{% endblock %}

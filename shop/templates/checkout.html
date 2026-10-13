@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Checkout{% endblock %}
+{% block content %}
+<h1>Checkout</h1>
+<div class="checkout">
+  <form method="post" class="form">
+    <label>Full name <input name="name" value="{{ form.name }}" required /></label>
+    <label>Email <input type="email" name="email" value="{{ form.email }}" required /></label>
+    <label>Delivery address <textarea name="address" rows="3" required>{{ form.address }}</textarea></label>
+    <p class="muted">Payment: cash on delivery</p>
+    <button class="btn">Place order · {{ total | taka }}</button>
+  </form>
+  <aside class="summary">
+    <h2>Order summary</h2>
+    {% for item in items %}
+      <p class="row between"><span>{{ item.quantity }} × {{ item.product.name }}</span><span>{{ item.subtotal | taka }}</span></p>
+    {% endfor %}
+    <p class="row between total"><span>Total</span><span>{{ total | taka }}</span></p>
+  </aside>
+</div>
+{% endblock %}
